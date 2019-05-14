@@ -393,26 +393,31 @@ cadet_match_dataframe.to_csv("/Users/Bobby/Desktop/14125Final/DA.csv")
 all_matches_uncor = {}
 all_matches_cor = {}
 
-start_iteration = 0
+start_iteration = 900
 
-iteration_num = 3
+iteration_num = 100
 iteration = start_iteration
 
 #Load Current Version of Files
-with open("./uncor_output.json", "r") as uncor_file:
-    uncor_input = uncor_file.read()
-    if len(uncor_input) > 0:
-        all_matches_uncor = json.loads(uncor_input)
 
-with open("./cor_output.json", "r") as cor_file:
-    cor_input = cor_file.read()
-    if len(cor_input) > 0:
-        all_matches_cor = json.loads(cor_input)
+try:
+    with open("./uncor_output.json", "r") as uncor_file:
+        uncor_input = uncor_file.read()
+        if len(uncor_input) > 0:
+            all_matches_uncor = json.loads(uncor_input)
+    
+    with open("./cor_output.json", "r") as cor_file:
+        cor_input = cor_file.read()
+        if len(cor_input) > 0:
+            all_matches_cor = json.loads(cor_input)
+    
+    assert(len(all_matches_uncor) == len(all_matches_cor))
 
-assert(len(all_matches_uncor) == len(all_matches_cor))
+except:
+    pass
 
 if len(all_matches_uncor) > 0:
-    iteration = max([int(k) for k in all_matches_uncor.keys()]) + 1
+    iteration = max(max([int(k) for k in all_matches_uncor.keys()]) + 1, iteration)
     print("Skipped to iteration {}".format(iteration))
 
 
